@@ -7,7 +7,7 @@ const classifier = new emotionClassifier();
 
 //start camera
 //test again
-//liam testing
+//liam testing 11
 startCamera();
 
 cameraEl.addEventListener('play', () => {
