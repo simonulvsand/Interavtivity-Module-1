@@ -42,6 +42,7 @@ function renderFrame() {
     }
   }
   draw();
+  
 
   var c = canvasEl.getContext('2d');
   var p = tracker.getCurrentPosition();
@@ -71,6 +72,8 @@ trackerDraw();
   window.requestAnimationFrame(renderFrame);
 }
 
+
+
 function updateData(er) {
   var r = '';
   for (var i = 0; i < er.length; i++) {
@@ -83,7 +86,19 @@ function updateData(er) {
     r += '">' + er[i].emotion + '</span> <span class="value">' + er[i].value + '</span></span>';
   }
   resultsEl.innerHTML = r;
+  if (er[0].value > 70){
+    document.getElementById("canvas").style.backgroundColor = "red";
+    
+  }
+  else if (er[5].value > 70){
+    document.getElementById("canvas").style.backgroundColor = "rgb(60,200,20)";
+  }
+  else {
+    document.getElementById("canvas").style.backgroundColor = "white";
+  }
+  
 }
+
 
 // ------------------------
 // Reports outcome of trying to get the camera ready
