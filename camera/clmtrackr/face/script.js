@@ -4,6 +4,7 @@ const thingEl = document.getElementById('thing');
 
 const tracker = new clm.tracker();
 
+
 document.body.addEventListener('click', e => {
   document.getElementById('canvas').classList.toggle('hidden');
 });
@@ -64,6 +65,8 @@ function renderFrame() {
   window.requestAnimationFrame(renderFrame);
 }
 
+
+
 function processTrack(p) {
   var eventData = {
     rotation: NaN,
@@ -75,6 +78,14 @@ function processTrack(p) {
   // Use point 0 and 14, which correspond roughly to the sides of the face
   // See diagram on https://github.com/auduno/clmtrackr
   eventData.rotation = Math.floor(calcAngle(p[0], p[14]));
+console.log(eventData.rotation);
+
+  if(eventData.rotation < 0){
+    document.body.style.backgroundColor = "red";
+  }
+  else{
+    document.body.style.backgroundColor = "blue";
+  }; 
 
   // Use points 33 and 7 which correspond roughly to the top and bottom of face
   const vDistance = calcDistance(p[33], p[7]);
@@ -92,6 +103,7 @@ function processTrack(p) {
 
   return eventData;
 }
+
 
 // ------------------------
 // Reports outcome of trying to get the camera ready
