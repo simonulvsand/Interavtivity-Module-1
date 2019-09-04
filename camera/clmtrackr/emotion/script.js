@@ -5,6 +5,7 @@ const resultsEl = document.getElementById('results');
 const tracker = new clm.tracker();
 const classifier = new emotionClassifier();
 
+//start camera
 startCamera();
 
 cameraEl.addEventListener('play', () => {
