@@ -81,11 +81,13 @@ function processTrack(p) {
 console.log(eventData.rotation);
 
   if(eventData.rotation < 0){
-    document.body.style.backgroundColor = "red";
+    document.getElementById("thing").style.backgroundColor = "blue";
   }
   else{
-    document.body.style.backgroundColor = "blue";
+    document.getElementById("thing").style.backgroundColor = "orange";
   }; 
+ 
+
 
   // Use points 33 and 7 which correspond roughly to the top and bottom of face
   const vDistance = calcDistance(p[33], p[7]);
