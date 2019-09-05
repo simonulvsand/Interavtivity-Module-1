@@ -38,7 +38,7 @@ function renderFrame() {
   
       ctx.fillRect(0, 0, cameraEl.videoWidth, cameraEl.videoHeight);
       ctx.clearRect(0, 0, cameraEl.videoWidth, cameraEl.videoHeight);
-      ctx.strokeRect(0, 0, cameraEl.videoWidth, cameraEl.videoHeight);
+      //ctx.strokeRect(0, 0, cameraEl.videoWidth, cameraEl.videoHeight);
     }
   }
   draw();
@@ -87,16 +87,18 @@ function updateData(er) {
   }
   resultsEl.innerHTML = r;
   if (er[0].value > 70){
-    document.getElementById("canvas").style.backgroundColor = "red";
-    document.getElementById('anger').play();
+    
+
+    //document.getElementById("canvas").style.backgroundColor = "red";
+   // document.getElementById('anger').play();
     
   }
   else if (er[5].value > 70){
-    document.getElementById("canvas").style.backgroundColor = "rgb(60,200,20)";
-    document.getElementById('yeah').play();
+    //document.getElementById("canvas").style.backgroundColor = "rgb(60,200,20)";
+    //document.getElementById('yeah').play();
     }
   else {
-    document.getElementById("canvas").style.backgroundColor = "white";
+    //document.getElementById("canvas").style.backgroundColor = "white";
 
   }
   
