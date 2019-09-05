@@ -78,7 +78,7 @@ function processTrack(p) {
   // Use point 0 and 14, which correspond roughly to the sides of the face
   // See diagram on https://github.com/auduno/clmtrackr
   eventData.rotation = Math.floor(calcAngle(p[0], p[14]));
-console.log(eventData.rotation);
+//console.log(eventData.rotation);
 
   if(eventData.rotation < 0){
     document.getElementById("thing").style.backgroundColor = "blue";
@@ -86,7 +86,6 @@ console.log(eventData.rotation);
   else{
     document.getElementById("thing").style.backgroundColor = "orange";
   }; 
- 
 
 
   // Use points 33 and 7 which correspond roughly to the top and bottom of face
@@ -103,9 +102,19 @@ console.log(eventData.rotation);
   // Compute an overall relative size based on average of both
   eventData.size = (eventData.vert + eventData.horiz) / 2;
 
-  return eventData;
-}
+  //console.log(eventData.size *100);
+  let sizeProcentage = eventData.size *100;
 
+  if(sizeProcentage < 30) {
+    document.body.style.backgroundColor = "green";
+  }
+  else {
+  document.body.style.backgroundColor = "red";
+  };
+  
+  return eventData;
+
+}
 
 // ------------------------
 // Reports outcome of trying to get the camera ready
