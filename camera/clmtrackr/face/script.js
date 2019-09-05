@@ -78,7 +78,10 @@ function processTrack(p) {
   // Use point 0 and 14, which correspond roughly to the sides of the face
   // See diagram on https://github.com/auduno/clmtrackr
   eventData.rotation = Math.floor(calcAngle(p[0], p[14]));
+<<<<<<< HEAD
+=======
 //console.log(eventData.rotation);
+>>>>>>> 4759c2296e80f17fc9ec761a32af9297b310c66b
 
   if(eventData.rotation < 0){
     document.getElementById("thing").style.backgroundColor = "blue";
