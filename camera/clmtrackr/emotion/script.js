@@ -4,6 +4,8 @@ const canvasEl = document.getElementById('canvas');
 const resultsEl = document.getElementById('results');
 const tracker = new clm.tracker();
 const classifier = new emotionClassifier();
+let strokeColour= 'rgb(0,0,0)';
+
 
 //start camera
 //test again
@@ -75,6 +77,7 @@ trackerDraw();
 
 
 function updateData(er) {
+
   var r = '';
   for (var i = 0; i < er.length; i++) {
     // Simplify to an integer
@@ -87,16 +90,24 @@ function updateData(er) {
   }
   resultsEl.innerHTML = r;
   if (er[0].value > 70){
-    document.getElementById("canvas").style.backgroundColor = "red";
+
+
+
+    // document.getElementById("canvas").style.backgroundColor = "red";
+    strokeColour = 'rgb(255,0,0)';
     document.getElementById('anger').play();
     
   }
   else if (er[5].value > 70){
-    document.getElementById("canvas").style.backgroundColor = "rgb(60,200,20)";
+    // document.getElementById("canvas").style.backgroundColor = "rgb(60,200,20)";
+    strokeColour = 'rgb(60,200,20)';
+
     document.getElementById('yeah').play();
     }
   else {
-    document.getElementById("canvas").style.backgroundColor = "white";
+    // document.getElementById("canvas").style.backgroundColor = "white";
+    strokeColour = 'rgb(0,0,0)';
+
 
   }
   
