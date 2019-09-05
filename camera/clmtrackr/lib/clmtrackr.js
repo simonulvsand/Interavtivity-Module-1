@@ -1,3 +1,5 @@
+
+
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
@@ -14925,6 +14927,7 @@ var clm = {
 			runnerBox = undefined;
 		};
 
+
 		/*
 		 *	draw model on given canvas
 		 */
@@ -14940,8 +14943,9 @@ var clm = {
 
 			var cc = canvas.getContext('2d');
 			cc.fillStyle = 'rgb(200,200,200)';
-			cc.strokeStyle = 'rgb(0,0,0)';
-			cc.lineWidth = 4;
+            cc.strokeStyle = strokeColour;
+            cc.lineWidth = 4;
+            
 
 			var paths;
 			if (path === undefined) {
