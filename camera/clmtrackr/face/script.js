@@ -1,6 +1,7 @@
 const cameraEl = document.getElementById('camera');
 const canvasEl = document.getElementById('canvas');
 const thingEl = document.getElementById('thing');
+const opacityEl = document.getElementById("opacity");
 
 const tracker = new clm.tracker();
 
@@ -81,10 +82,10 @@ function processTrack(p) {
 //console.log(eventData.rotation);
 
   if(eventData.rotation < 0){
-    document.getElementById("thing").style.backgroundColor = "blue";
+    document.body.style.opacity = 0.2;
   }
   else{
-    document.getElementById("thing").style.backgroundColor = "orange";
+    document.body.style.opacity = 1;
   }; 
 
 
