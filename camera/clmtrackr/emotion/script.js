@@ -88,41 +88,26 @@ function updateData(er) {
     if (er[i].value > 50) r += ' highlight';
     r += '">' + er[i].emotion + '</span> <span class="value">' + er[i].value + '</span></span>';
   }
-  resultsEl.innerHTML = r;
+  //resultsEl.innerHTML = r;
   if (er[0].value > 70){
-<<<<<<< HEAD
-    
-
-    //document.getElementById("canvas").style.backgroundColor = "red";
-   // document.getElementById('anger').play();
-    
-  }
-  else if (er[5].value > 70){
-    //document.getElementById("canvas").style.backgroundColor = "rgb(60,200,20)";
-    //document.getElementById('yeah').play();
-    }
-  else {
-    //document.getElementById("canvas").style.backgroundColor = "white";
-=======
 
 
 
     // document.getElementById("canvas").style.backgroundColor = "red";
     strokeColour = 'rgb(255,0,0)';
-    document.getElementById('anger').play();
+    //document.getElementById('anger').play();
     
   }
   else if (er[5].value > 70){
     // document.getElementById("canvas").style.backgroundColor = "rgb(60,200,20)";
     strokeColour = 'rgb(60,200,20)';
 
-    document.getElementById('yeah').play();
+    //document.getElementById('yeah').play();
     }
   else {
     // document.getElementById("canvas").style.backgroundColor = "white";
     strokeColour = 'rgb(0,0,0)';
 
->>>>>>> 622eee6a83ba816d98dacafb2b054a307a9109b5
 
   }
   
