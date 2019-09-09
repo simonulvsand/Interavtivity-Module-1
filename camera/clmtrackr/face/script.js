@@ -79,9 +79,9 @@ function processTrack(p) {
   // Use point 0 and 14, which correspond roughly to the sides of the face
   // See diagram on https://github.com/auduno/clmtrackr
   eventData.rotation = Math.floor(calcAngle(p[0], p[14]));
-// console.log(eventData.rotation);
+//console.log(eventData.rotation);
 
-let absoluteRotation= Math.abs(eventData.rotation);
+ let absoluteRotation= Math.abs(eventData.rotation);
 
 for(i=0; i< absoluteRotation; i++){
     document.getElementById("thing").style.opacity = i/80;

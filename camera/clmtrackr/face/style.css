@@ -65,5 +65,5 @@
   display: none;
 }
 #thing.inactive {
-  background-color: silver;
+  /* background-color: silver; */
 }
