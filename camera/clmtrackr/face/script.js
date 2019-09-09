@@ -105,12 +105,16 @@ function processTrack(p) {
   //console.log(eventData.size *100);
   let sizeProcentage = eventData.size *100;
 
-  if(sizeProcentage < 30) {
-    document.body.style.backgroundColor = "green";
-  }
-  else {
-  document.body.style.backgroundColor = "rgb(200,100,30)";
+  for(i=0; i< sizeProcentage; i++){
+
+    if(sizeProcentage < 30) {
+      document.body.style.backgroundColor = 'hsl(' + i + ', 100%, 50%)';
+    }
+    else {
+      document.body.style.backgroundColor = 'hsl(100%,' + i + ', 50%)';
+    };
   };
+  
 
   return eventData;
 
