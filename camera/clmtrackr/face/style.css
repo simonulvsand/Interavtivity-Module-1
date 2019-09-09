@@ -16,9 +16,13 @@
 }
 
 #thing {
-  background-color: salmon;
-  height: 20vh;
-  width: 1vw;
+  background-color: white;
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  display: inline-block;
+
+
 }
 .hidden {
   display: none;
