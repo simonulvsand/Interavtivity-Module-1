@@ -62,7 +62,7 @@ function processPoses(poses) {
     const leftShoulder = getKeypointPos(poses, 'leftShoulder');
     const rightShoulder = getKeypointPos(poses, 'rightShoulder');
 
-    let distance= leftShoulder.x - rightShoulder.x;
+    let distance= Math.floor(Math.abs(leftShoulder.x - rightShoulder.x));
 
 
     if (leftEye != null && rightEye != null) {
