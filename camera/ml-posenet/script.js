@@ -4,13 +4,13 @@ const canvasEl = document.getElementById('canvas');
 const resultsEl = document.getElementById('results');
 const poseColours = [];
 
-document.getElementById('btnFreeze').addEventListener('click', evt => {
-  if (cameraEl.paused) {
-    cameraEl.play();
-  } else {
-    cameraEl.pause();
-  }
-});
+// document.getElementById('btnFreeze').addEventListener('click', evt => {
+//   if (cameraEl.paused) {
+//     cameraEl.play();
+//   } else {
+//     cameraEl.pause();
+//   }
+// });
 
 console.log('Loading posenet model')
 
@@ -57,16 +57,24 @@ function processPoses(poses) {
   // Demo of using position:
   //  Calculates a 'slouch factor' - difference in Y between left/right shoulders
   if (poses.length == 1 && poses[0].score > 0.3) {
+    const leftEye = getKeypointPos(poses, 'leftEye');
+    const rightEye = getKeypointPos(poses, 'rightEye');
     const leftShoulder = getKeypointPos(poses, 'leftShoulder');
     const rightShoulder = getKeypointPos(poses, 'rightShoulder');
-    if (leftShoulder != null && rightShoulder != null) {
-      const slouchFactor = Math.floor(Math.abs(leftShoulder.y - rightShoulder.y));
+
+    let distance= leftShoulder.x - rightShoulder.x;
+
+
+    if (leftEye != null && rightEye != null) {
+      const slouchFactor = Math.floor(Math.abs(leftEye.y - rightEye.y));
 
       var c = canvasEl.getContext('2d');
       c.fillStyle = 'black';
       c.fillText('Slouch factor: ' + slouchFactor, 100, 10);
     }
   }
+
+
 
   // Repeat, if not paused
   if (cameraEl.paused) {
@@ -84,8 +92,10 @@ function getKeypointPos(poses, name, poseIndex = 0) {
 
   const kp = poses[poseIndex].keypoints.find(kp => kp.part == name);
   if (kp == null) return null;
+
   return kp.position;
 }
+
 
 function drawPoses(poses) {
   // Draw frame to canvas
