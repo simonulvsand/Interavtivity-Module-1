@@ -63,9 +63,16 @@ function processPoses(poses) {
     const rightShoulder = getKeypointPos(poses, 'rightShoulder');    
     const leftWrist = getKeypointPos(poses, 'leftShoulder');
     const rightWrist = getKeypointPos(poses, 'rightShoulder');
+    const leftHip = getKeypointPos(poses, 'leftHip');
+    const rightHip = getKeypointPos(poses, 'rightHip');
+
 
     let distance= Math.floor(Math.abs(leftShoulder.x - rightShoulder.x));
     let clapping= Math.floor(Math.abs(leftWrist.x - rightWrist.x));
+
+    let centralPoint = Math.floor(Math.abs(leftHip.x - rightHip.x)) /2;
+    console.log(centralPoint);
+    
     // for(i=0; i< clapping; i++){
     //     document.body.style.backgroundColor = 'rgb(' + i + ', 100, 0)';
      
