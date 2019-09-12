@@ -26,7 +26,7 @@ posenet.load({
   model = m;
   console.log('Model loaded, starting camera');
   startCamera();
-})
+});
 
 
 
@@ -52,17 +52,17 @@ function process() {
 function processPoses(poses) {
   // For debug purposes, draw points
   drawPoses(poses);
-
-
+  
+  
   // Demo of using position:
   //  Calculates a 'slouch factor' - difference in Y between left/right shoulders
-  if (poses.length == 1 && poses[0].score > 0.3) {
-    const leftEye = getKeypointPos(poses, 'leftEye');
-    const rightEye = getKeypointPos(poses, 'rightEye');
+  if (poses.length == 2 && poses[0].score > 0.3 && poses[1].score > 0.3 ) {
+    // const leftEye = getKeypointPos(poses, 'leftEye');
+    // const rightEye = getKeypointPos(poses, 'rightEye');
     const leftShoulder = getKeypointPos(poses, 'leftShoulder');
     const rightShoulder = getKeypointPos(poses, 'rightShoulder');    
-    const leftWrist = getKeypointPos(poses, 'leftShoulder');
-    const rightWrist = getKeypointPos(poses, 'rightShoulder');
+    // const leftWrist = getKeypointPos(poses, 'leftShoulder');
+    // const rightWrist = getKeypointPos(poses, 'rightShoulder');
 
     let distance= Math.floor(Math.abs(leftShoulder.x - rightShoulder.x));
     let clapping= Math.floor(Math.abs(leftWrist.x - rightWrist.x));
@@ -90,6 +90,8 @@ function processPoses(poses) {
   }
   window.requestAnimationFrame(process);
 }
+
+
 
 // Helper function to get a named keypoint position
 function getKeypointPos(poses, name, poseIndex = 0) {
