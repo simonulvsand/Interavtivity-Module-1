@@ -59,19 +59,24 @@ function processPoses(poses) {
   if (poses.length == 2 && poses[0].score > 0.3 && poses[1].score > 0.3 ) {
     // const leftEye = getKeypointPos(poses, 'leftEye');
     // const rightEye = getKeypointPos(poses, 'rightEye');
-    const leftShoulder = getKeypointPos(poses, 'leftShoulder');
-    const rightShoulder = getKeypointPos(poses, 'rightShoulder');    
-    const leftWrist = getKeypointPos(poses, 'leftShoulder');
-    const rightWrist = getKeypointPos(poses, 'rightShoulder');
-    const leftHip = getKeypointPos(poses, 'leftHip');
-    const rightHip = getKeypointPos(poses, 'rightHip');
+    // const leftShoulder = getKeypointPos(poses, 'leftShoulder');
+    // const rightShoulder = getKeypointPos(poses, 'rightShoulder');    
+    // const leftWrist = getKeypointPos(poses, 'leftShoulder');
+    // const rightWrist = getKeypointPos(poses, 'rightShoulder');
+    const leftShoulder0 = getKeypointPos(poses, 'leftShoulder', 0);
+    const rightShoulder0 = getKeypointPos(poses, 'rightShoulder', 0);
+
+    const leftShoulder1 = getKeypointPos(poses, 'leftShoulder', 1);
+    const rightShoulder1 = getKeypointPos(poses, 'rightShoulder', 1);
 
 
-    let distance= Math.floor(Math.abs(leftShoulder.x - rightShoulder.x));
-    let clapping= Math.floor(Math.abs(leftWrist.x - rightWrist.x));
+    // let distance= Math.floor(Math.abs(leftShoulder.x - rightShoulder.x));
+    // let clapping= Math.floor(Math.abs(leftWrist.x - rightWrist.x));
 
-    let centralPoint = Math.floor(Math.abs(leftHip.x - rightHip.x)) /2;
-    console.log(centralPoint);
+    // let centralPoint0 = Math.floor(Math.abs(leftShoulder0.x - rightShoulder0.x)) /2;
+    // let centralPoint1 = Math.floor(Math.abs(leftShoulder1.x - rightShoulder1.x)) /2;
+
+    console.log(Math.abs(rightShoulder0.x-rightShoulder1.x));
     
     // for(i=0; i< clapping; i++){
     //     document.body.style.backgroundColor = 'rgb(' + i + ', 100, 0)';
@@ -79,15 +84,14 @@ function processPoses(poses) {
     // };
 
 
-    if (leftEye != null && rightEye != null) {
-      const slouchFactor = Math.floor(Math.abs(leftEye.y - rightEye.y));
+    // if (leftEye != null && rightEye != null) {
+    //   const slouchFactor = Math.floor(Math.abs(leftEye.y - rightEye.y));
 
-      var c = canvasEl.getContext('2d');
-      c.fillStyle = 'black';
-      c.fillText('Slouch factor: ' + slouchFactor, 100, 10);
-    }
+    //   var c = canvasEl.getContext('2d');
+    //   c.fillStyle = 'black';
+    //   c.fillText('Slouch factor: ' + slouchFactor, 100, 10);
+    // }
   }
-
 
 
   // Repeat, if not paused
