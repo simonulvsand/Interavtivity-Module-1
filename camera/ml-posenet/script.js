@@ -190,6 +190,8 @@ function startCamera() {
   if (!navigator.getUserMedia) {
     cameraReady('getUserMedia not supported');
     return;
+
+  
   }
   navigator.getUserMedia({ video: { width: 640, height: 480 }, audio: false },
     (stream) => {
