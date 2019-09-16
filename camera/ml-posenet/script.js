@@ -52,46 +52,98 @@ function process() {
 function processPoses(poses) {
   // For debug purposes, draw points
   drawPoses(poses);
-  
+  // const leftShoulder0 = getKeypointPos(poses, 'leftShoulder', 0);
+  // const rightShoulder0 = getKeypointPos(poses, 'rightShoulder', 0);
+
+  //   const leftShoulder1 = getKeypointPos(poses, 'leftShoulder', 1);
+  //   const rightShoulder1 = getKeypointPos(poses, 'rightShoulder', 1);
+
+  //   const leftShoulder2 = getKeypointPos(poses, 'leftShoulder', 2);
+  //   const rightShoulder2 = getKeypointPos(poses, 'rightShoulder', 2);
+
+  //   const leftShoulder3 = getKeypointPos(poses, 'leftShoulder', 3);
+  //   const rightShoulder3 = getKeypointPos(poses, 'rightShoulder', 3);
+
+  //   const leftShoulder4= getKeypointPos(poses, 'leftShoulder', 4);
+  //   const rightShoulder4 = getKeypointPos(poses, 'rightShoulder', 4);
+    
+  //   const personZ0= Math.floor(Math.abs(leftShoulder0.x-rightShoulder0.x) /2);
+  //   const personZ1= Math.floor(Math.abs(leftShoulder1.x-rightShoulder1.x) /2);
+  //   const personZ2= Math.floor(Math.abs(leftShoulder2.x-rightShoulder2.x) /2);
+  //   const personZ3= Math.floor(Math.abs(leftShoulder3.x-rightShoulder3.x) /2);
+  //   const personZ4= Math.floor(Math.abs(leftShoulder4.x-rightShoulder4.x) /2);
+
+
+  //   console.log("First Person:     " + personZ0);
+  //   console.log("Second Person:    " + personZ1);    
+  //   console.log("Third Person:     " + personZ2);
+  //   console.log("Fourth Person:    " + personZ3);
+  //   console.log("Fifth Person:    " + personZ4);
+  let poseStrength = false;
+
+  // let poseStrength = false;
+  if(poses.length > 0){
+
+    for(i=0; i< (poses.length-1); i++) {
+      if (poses[i].score > 0.3){
+        poseStrength = true;
+      }else{
+        poseStrength = false;
+      }
+      console.log(poseStrength);
+    }
+
+  };
+
   
   // Demo of using position:
   //  Calculates a 'slouch factor' - difference in Y between left/right shoulders
-  if (poses.length == 2 && poses[0].score > 0.3 && poses[1].score > 0.3 ) {
-    // const leftEye = getKeypointPos(poses, 'leftEye');
-    // const rightEye = getKeypointPos(poses, 'rightEye');
-    // const leftShoulder = getKeypointPos(poses, 'leftShoulder');
-    // const rightShoulder = getKeypointPos(poses, 'rightShoulder');    
-    // const leftWrist = getKeypointPos(poses, 'leftShoulder');
-    // const rightWrist = getKeypointPos(poses, 'rightShoulder');
-    const leftShoulder0 = getKeypointPos(poses, 'leftShoulder', 0);
-    const rightShoulder0 = getKeypointPos(poses, 'rightShoulder', 0);
+  // if (poses.length == 5 && poses[0].score > 0.3 ) {
 
-    const leftShoulder1 = getKeypointPos(poses, 'leftShoulder', 1);
-    const rightShoulder1 = getKeypointPos(poses, 'rightShoulder', 1);
+  //   const leftShoulder0 = getKeypointPos(poses, 'leftShoulder', 0);
+  //   const rightShoulder0 = getKeypointPos(poses, 'rightShoulder', 0);
 
+  //   const leftShoulder1 = getKeypointPos(poses, 'leftShoulder', 1);
+  //   const rightShoulder1 = getKeypointPos(poses, 'rightShoulder', 1);
 
-    // let distance= Math.floor(Math.abs(leftShoulder.x - rightShoulder.x));
-    // let clapping= Math.floor(Math.abs(leftWrist.x - rightWrist.x));
+  //   const leftShoulder2 = getKeypointPos(poses, 'leftShoulder', 2);
+  //   const rightShoulder2 = getKeypointPos(poses, 'rightShoulder', 2);
 
-    // let centralPoint0 = Math.floor(Math.abs(leftShoulder0.x - rightShoulder0.x)) /2;
-    // let centralPoint1 = Math.floor(Math.abs(leftShoulder1.x - rightShoulder1.x)) /2;
+  //   const leftShoulder3 = getKeypointPos(poses, 'leftShoulder', 3);
+  //   const rightShoulder3 = getKeypointPos(poses, 'rightShoulder', 3);
 
-    console.log(Math.abs(rightShoulder0.x-rightShoulder1.x));
+  //   const leftShoulder4= getKeypointPos(poses, 'leftShoulder', 4);
+  //   const rightShoulder4 = getKeypointPos(poses, 'rightShoulder', 4);
     
-    // for(i=0; i< clapping; i++){
-    //     document.body.style.backgroundColor = 'rgb(' + i + ', 100, 0)';
-     
-    // };
+  //   const personZ0= Math.floor(Math.abs(leftShoulder0.x-rightShoulder0.x) /2);
+  //   const personZ1= Math.floor(Math.abs(leftShoulder1.x-rightShoulder1.x) /2);
+  //   const personZ2= Math.floor(Math.abs(leftShoulder2.x-rightShoulder2.x) /2);
+  //   const personZ3= Math.floor(Math.abs(leftShoulder3.x-rightShoulder3.x) /2);
+  //   const personZ4= Math.floor(Math.abs(leftShoulder4.x-rightShoulder4.x) /2);
 
 
-    // if (leftEye != null && rightEye != null) {
-    //   const slouchFactor = Math.floor(Math.abs(leftEye.y - rightEye.y));
 
-    //   var c = canvasEl.getContext('2d');
-    //   c.fillStyle = 'black';
-    //   c.fillText('Slouch factor: ' + slouchFactor, 100, 10);
-    // }
-  }
+  //   console.log("First Person:     " + personZ0);
+  //   console.log("Second Person:    " + personZ1);    
+  //   console.log("Third Person:     " + personZ2);
+  //   console.log("Fourth Person:    " + personZ3);
+  //   console.log("Fifth Person:    " + personZ4);
+
+
+
+  //   // let centralPoint0 = Math.floor(Math.abs(leftShoulder0.x - rightShoulder0.x)) /2;
+  //   // let centralPoint1 = Math.floor(Math.abs(leftShoulder1.x - rightShoulder1.x)) /2;
+
+
+
+  //   // if (leftEye != null && rightEye != null) {
+  //   //   const slouchFactor = Math.floor(Math.abs(leftEye.y - rightEye.y));
+
+  //   //   var c = canvasEl.getContext('2d');
+  //   //   c.fillStyle = 'black';
+  //   //   c.fillText('Slouch factor: ' + slouchFactor, 100, 10);
+  //   // }
+  // }
 
 
   // Repeat, if not paused
