@@ -52,17 +52,7 @@ function process() {
 function processPoses(poses) {
   // For debug purposes, draw points
   drawPoses(poses);
-  // const leftShoulder0 = getKeypointPos(poses, 'leftShoulder', 0);
-  // const rightShoulder0 = getKeypointPos(poses, 'rightShoulder', 0);
 
-  //   const leftShoulder1 = getKeypointPos(poses, 'leftShoulder', 1);
-  //   const rightShoulder1 = getKeypointPos(poses, 'rightShoulder', 1);
-
-  //   const leftShoulder2 = getKeypointPos(poses, 'leftShoulder', 2);
-  //   const rightShoulder2 = getKeypointPos(poses, 'rightShoulder', 2);
-
-  //   const leftShoulder3 = getKeypointPos(poses, 'leftShoulder', 3);
-  //   const rightShoulder3 = getKeypointPos(poses, 'rightShoulder', 3);
 
   //   const leftShoulder4= getKeypointPos(poses, 'leftShoulder', 4);
   //   const rightShoulder4 = getKeypointPos(poses, 'rightShoulder', 4);
@@ -84,50 +74,45 @@ function processPoses(poses) {
   // let poseStrength = false;
   if(poses.length > 0){
 
-    for(i=0; i< (poses.length-1); i++) {
+
+    for(i=0; i< (poses.length); i++) {
       if (poses[i].score > 0.3){
         poseStrength = true;
       }else{
         poseStrength = false;
       }
-      console.log(poseStrength);
-    }
+
+      if(poseStrength == true){
+
+        const leftShoulder0 = getKeypointPos(poses, 'leftShoulder', 0);
+        const rightShoulder0 = getKeypointPos(poses, 'rightShoulder', 0);
+      
+        // const leftShoulder1 = getKeypointPos(poses, 'leftShoulder', 1);
+        // const rightShoulder1 = getKeypointPos(poses, 'rightShoulder', 1);
+      
+        // const leftShoulder2 = getKeypointPos(poses, 'leftShoulder', 2);
+        // const rightShoulder2 = getKeypointPos(poses, 'rightShoulder', 2);
+      
+        const personDistance0= Math.abs(leftShoulder0.x - rightShoulder0.x);
+        // const personDistance1= Math.abs(leftShoulder1.x - rightShoulder1.x);
+        // const personDistance3= Math.abs(leftShoulder2.x - rightShoulder2.x);
+        
+        for(i=0; personDistance0< 380; i++){
+          document.
+        }
+  
+  
+      }
+    };
+
+   
+
+
+
 
   };
 
   
-  // Demo of using position:
-  //  Calculates a 'slouch factor' - difference in Y between left/right shoulders
-  // if (poses.length == 5 && poses[0].score > 0.3 ) {
-
-  //   const leftShoulder0 = getKeypointPos(poses, 'leftShoulder', 0);
-  //   const rightShoulder0 = getKeypointPos(poses, 'rightShoulder', 0);
-
-  //   const leftShoulder1 = getKeypointPos(poses, 'leftShoulder', 1);
-  //   const rightShoulder1 = getKeypointPos(poses, 'rightShoulder', 1);
-
-  //   const leftShoulder2 = getKeypointPos(poses, 'leftShoulder', 2);
-  //   const rightShoulder2 = getKeypointPos(poses, 'rightShoulder', 2);
-
-  //   const leftShoulder3 = getKeypointPos(poses, 'leftShoulder', 3);
-  //   const rightShoulder3 = getKeypointPos(poses, 'rightShoulder', 3);
-
-  //   const leftShoulder4= getKeypointPos(poses, 'leftShoulder', 4);
-  //   const rightShoulder4 = getKeypointPos(poses, 'rightShoulder', 4);
-    
-  //   const personZ0= Math.floor(Math.abs(leftShoulder0.x-rightShoulder0.x) /2);
-  //   const personZ1= Math.floor(Math.abs(leftShoulder1.x-rightShoulder1.x) /2);
-  //   const personZ2= Math.floor(Math.abs(leftShoulder2.x-rightShoulder2.x) /2);
-  //   const personZ3= Math.floor(Math.abs(leftShoulder3.x-rightShoulder3.x) /2);
-  //   const personZ4= Math.floor(Math.abs(leftShoulder4.x-rightShoulder4.x) /2);
-
-
-
-  //   console.log("First Person:     " + personZ0);
-  //   console.log("Second Person:    " + personZ1);    
-  //   console.log("Third Person:     " + personZ2);
-  //   console.log("Fourth Person:    " + personZ3);
-  //   console.log("Fifth Person:    " + personZ4);
 
 
 
