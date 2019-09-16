@@ -98,7 +98,8 @@ function processPoses(poses) {
         // const personDistance3= Math.abs(leftShoulder2.x - rightShoulder2.x);
         
         for(i=0; personDistance0< 380; i++){
-          document.
+          var audio0 = document.getElementById("sound0");
+          audio0.volume = i;
         }
   
   
