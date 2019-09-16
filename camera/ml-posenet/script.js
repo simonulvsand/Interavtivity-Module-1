@@ -106,7 +106,7 @@ function processPoses(poses) {
           audio0.volume= i/700;
         }
       }else{
-        audio0.pause();
+        audio0.volume= 0;
 
       };
 
@@ -125,7 +125,7 @@ function processPoses(poses) {
         }
       }
       else{
-        audio1.pause();
+        audio1.volume=0;
 
       };
 
@@ -174,7 +174,7 @@ function drawPoses(poses) {
   c.drawImage(cameraEl, 0, 0, cameraEl.videoWidth, cameraEl.videoHeight);
 
   // Fade out image
-  c.fillStyle = 'rgba(255,255,255,0.7)';
+  c.fillStyle = 'rgba(255,0,0,0)';
   c.fillRect(0, 0, cameraEl.videoWidth, cameraEl.videoHeight);
 
   // Draw each detected pose
