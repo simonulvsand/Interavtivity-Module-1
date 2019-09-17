@@ -1,7 +1,7 @@
 // @ts-nocheck
-const cameraEl = document.getElementById('camera');
-const canvasEl = document.getElementById('canvas');
-const resultsEl = document.getElementById('results');
+const cameraEl = document.getElementById("camera");
+const canvasEl = document.getElementById("canvas");
+const resultsEl = document.getElementById("results");
 const poseColours = [];
 
 // document.getElementById('btnFreeze').addEventListener('click', evt => {
@@ -12,25 +12,25 @@ const poseColours = [];
 //   }
 // });
 
-console.log('Loading posenet model')
+console.log("Loading posenet model");
 
 // See docs for info on these parameters
 // https://github.com/tensorflow/tfjs-models/tree/master/posenet
 let model = null;
-posenet.load({
-  architecture: 'ResNet50',
-  outputStride: 32,
-  inputResolution: 257,
-  quantBytes: 4
-}).then(m => {
-  model = m;
-  console.log('Model loaded, starting camera');
-  startCamera();
-});
+posenet
+  .load({
+    architecture: "ResNet50",
+    outputStride: 32,
+    inputResolution: 257,
+    quantBytes: 4
+  })
+  .then(m => {
+    model = m;
+    console.log("Model loaded, starting camera");
+    startCamera();
+  });
 
-
-
-cameraEl.addEventListener('play', () => {
+cameraEl.addEventListener("play", () => {
   // Resize canvas to match camera frame sie
   canvasEl.width = cameraEl.videoWidth;
   canvasEl.height = cameraEl.videoHeight;
@@ -41,30 +41,31 @@ cameraEl.addEventListener('play', () => {
 
 // Processes the last frame from camera
 function process() {
-  model.estimateMultiplePoses(canvasEl, {
-    flipHorizontal: false,
-    maxDetections: 5, /* max # poses */
-    scoreThreshold: 0.5,
-    nmsRadius: 20
-  }).then(processPoses); /* call processPoses with result */
+  model
+    .estimateMultiplePoses(canvasEl, {
+      flipHorizontal: false,
+      maxDetections: 5 /* max # poses */,
+      scoreThreshold: 0.5,
+      nmsRadius: 20
+    })
+    .then(processPoses); /* call processPoses with result */
 }
 
 function processPoses(poses) {
   // For debug purposes, draw points
   drawPoses(poses);
 
-          // const leftShoulder1 = getKeypointPos(poses, 'leftShoulder', 1);
-        // const rightShoulder1 = getKeypointPos(poses, 'rightShoulder', 1);
-      
-        // const leftShoulder2 = getKeypointPos(poses, 'leftShoulder', 2);
-        // const rightShoulder2 = getKeypointPos(poses, 'rightShoulder', 2);
+  // const leftShoulder1 = getKeypointPos(poses, 'leftShoulder', 1);
+  // const rightShoulder1 = getKeypointPos(poses, 'rightShoulder', 1);
+
+  // const leftShoulder2 = getKeypointPos(poses, 'leftShoulder', 2);
+  // const rightShoulder2 = getKeypointPos(poses, 'rightShoulder', 2);
 
   //   const leftShoulder4= getKeypointPos(poses, 'leftShoulder', 4);
   //   const rightShoulder4 = getKeypointPos(poses, 'rightShoulder', 4);
-    
-          // const personDistance1= Math.abs(leftShoulder1.x - rightShoulder1.x);
-        // const personDistance3= Math.abs(leftShoulder2.x - rightShoulder2.x);
 
+  // const personDistance1= Math.abs(leftShoulder1.x - rightShoulder1.x);
+  // const personDistance3= Math.abs(leftShoulder2.x - rightShoulder2.x);
 
   //   const personZ0= Math.floor(Math.abs(leftShoulder0.x-rightShoulder0.x) /2);
   //   const personZ1= Math.floor(Math.abs(leftShoulder1.x-rightShoulder1.x) /2);
@@ -73,67 +74,66 @@ function processPoses(poses) {
   //   const personZ4= Math.floor(Math.abs(leftShoulder4.x-rightShoulder4.x) /2);
 
 
-  //   console.log("First Person:     " + personZ0);
-  //   console.log("Second Person:    " + personZ1);    
-  //   console.log("Third Person:     " + personZ2);
-  //   console.log("Fourth Person:    " + personZ3);
-  //   console.log("Fifth Person:    " + personZ4);
   let poseStrength = false;
 
   // let poseStrength = false;
-    var audio0 = document.getElementById("sound0");
-    var audio1 = document.getElementById("sound1");
+  var audio0 = document.getElementById("sound0");
+  var audio1 = document.getElementById("sound1");
+  var audio2 = document.getElementById("sound2");
 
+  // for(i=0; i< (poses.length); i++) {
+  //   if (poses[i].score > 0.3){
+  //     poseStrength = true;
+  //   }else{
+  //     poseStrength = false;
+  //   }
 
-    // for(i=0; i< (poses.length); i++) {
-    //   if (poses[i].score > 0.3){
-    //     poseStrength = true;
-    //   }else{
-    //     poseStrength = false;
-    //   }
+  if (poses.length > 0 && poses[0].score > 0.3) {
+    const leftShoulder0 = getKeypointPos(poses, "leftShoulder", 0);
+    const rightShoulder0 = getKeypointPos(poses, "rightShoulder", 0);
 
-      if(poses.length > 0 && poses[0].score > 0.3){
+    const personDistance0 = Math.abs(leftShoulder0.x - rightShoulder0.x);
 
-        const leftShoulder0 = getKeypointPos(poses, 'leftShoulder', 0);
-        const rightShoulder0 = getKeypointPos(poses, 'rightShoulder', 0);
-      
-        const personDistance0= Math.abs(leftShoulder0.x - rightShoulder0.x);
+    audio0.play();
 
-        audio0.play();
+    for (i = 0; i < personDistance0; i++) {
+      audio0.volume = i / 700;
+    }
+  } else {
+    audio0.volume = 0;
+  };
 
-        
-        for(i=0; i < personDistance0 ; i++){
-          audio0.volume= i/700;
-        }
-      }else{
-        audio0.volume= 0;
+  if (poses.length > 1 && poses[1].score > 0.3) {
+    const leftShoulder1 = getKeypointPos(poses, "leftShoulder", 1);
+    const rightShoulder1 = getKeypointPos(poses, "rightShoulder", 1);
 
-      };
+    const personDistance1 = Math.abs(leftShoulder1.x - rightShoulder1.x);
 
-      if(poses.length > 1 && poses[1].score > 0.3){
+    audio1.play();
 
-        const leftShoulder1 = getKeypointPos(poses, 'leftShoulder', 1);
-        const rightShoulder1 = getKeypointPos(poses, 'rightShoulder', 1);
-      
-        const personDistance1= Math.abs(leftShoulder1.x - rightShoulder1.x);
+    for (i = 0; i < personDistance1; i++) {
+      audio1.volume = i / 700;
+    }
+  } else {
+    audio1.volume = 0;
+  }
+  if (poses.length > 2 && poses[2].score > 0.3) {
+    const leftShoulder2 = getKeypointPos(poses, "leftShoulder", 2);
+    const rightShoulder2 = getKeypointPos(poses, "rightShoulder", 2);
 
-        audio1.play();
+    const personDistance2 = Math.abs(leftShoulder2.x - rightShoulder2.x);
 
-        
-        for(i=0; i < personDistance1 ; i++){
-          audio1.volume= i/700;
-        }
-      }
-      else{
-        audio1.volume=0;
+    audio2.play();
 
-      };
-
+    for (i = 0; i < personDistance2; i++) {
+      audio2.volume = i / 700;
+    }
+  } else {
+    audio2.volume = 0;
+  }
 
   //   // let centralPoint0 = Math.floor(Math.abs(leftShoulder0.x - rightShoulder0.x)) /2;
   //   // let centralPoint1 = Math.floor(Math.abs(leftShoulder1.x - rightShoulder1.x)) /2;
-
-
 
   //   // if (leftEye != null && rightEye != null) {
   //   //   const slouchFactor = Math.floor(Math.abs(leftEye.y - rightEye.y));
@@ -144,16 +144,13 @@ function processPoses(poses) {
   //   // }
   // }
 
-
   // Repeat, if not paused
   if (cameraEl.paused) {
-    console.log('Paused processing');
+    console.log("Paused processing");
     return;
   }
   window.requestAnimationFrame(process);
 }
-
-
 
 // Helper function to get a named keypoint position
 function getKeypointPos(poses, name, poseIndex = 0) {
@@ -167,14 +164,13 @@ function getKeypointPos(poses, name, poseIndex = 0) {
   return kp.position;
 }
 
-
 function drawPoses(poses) {
   // Draw frame to canvas
-  var c = canvasEl.getContext('2d');
+  var c = canvasEl.getContext("2d");
   c.drawImage(cameraEl, 0, 0, cameraEl.videoWidth, cameraEl.videoHeight);
 
   // Fade out image
-  c.fillStyle = 'rgba(255,0,0,0)';
+  c.fillStyle = "rgba(255,0,0,0)";
   c.fillRect(0, 0, cameraEl.videoWidth, cameraEl.videoHeight);
 
   // Draw each detected pose
@@ -184,9 +180,9 @@ function drawPoses(poses) {
 
   // If there's no poses, draw a warning
   if (poses.length == 0) {
-    c.textBaseline = 'top';
-    c.fillStyle = 'red';
-    c.fillText('No poses detected', 10, 10);
+    c.textBaseline = "top";
+    c.fillStyle = "red";
+    c.fillText("No poses detected", 10, 10);
   }
 }
 
@@ -197,9 +193,9 @@ function drawPose(index, pose, c) {
   const colour = poseColours[index];
 
   // Draw prediction info
-  c.textBaseline = 'top';
+  c.textBaseline = "top";
   c.fillStyle = colour;
-  c.fillText(Math.floor(pose.score * 100) + '%', 10, (index * 20) + 10);
+  c.fillText(Math.floor(pose.score * 100) + "%", 10, index * 20 + 10);
 
   // Draw each pose part
   pose.keypoints.forEach(kp => {
@@ -218,8 +214,8 @@ function drawPose(index, pose, c) {
 
 // ------------------------
 function getRandomColor() {
-  var letters = '0123456789ABCDEF';
-  var color = '#';
+  var letters = "0123456789ABCDEF";
+  var color = "#";
   for (var i = 0; i < 6; i++) {
     color += letters[Math.floor(Math.random() * 16)];
   }
@@ -229,23 +225,26 @@ function getRandomColor() {
 // Reports outcome of trying to get the camera ready
 function cameraReady(err) {
   if (err) {
-    console.log('Camera not ready: ' + err);
+    console.log("Camera not ready: " + err);
     return;
   }
-  console.log('Camera ready');
+  console.log("Camera ready");
 }
 
 // Tries to get the camera ready, and begins streaming video to the cameraEl element.
 function startCamera() {
-  navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+  navigator.getUserMedia =
+    navigator.getUserMedia ||
+    navigator.webkitGetUserMedia ||
+    navigator.mozGetUserMedia ||
+    navigator.msGetUserMedia;
   if (!navigator.getUserMedia) {
-    cameraReady('getUserMedia not supported');
+    cameraReady("getUserMedia not supported");
     return;
-
-  
   }
-  navigator.getUserMedia({ video: { width: 640, height: 480 }, audio: false },
-    (stream) => {
+  navigator.getUserMedia(
+    { video: { width: 640, height: 480 }, audio: false },
+    stream => {
       try {
         cameraEl.srcObject = stream;
       } catch (error) {
@@ -253,7 +252,8 @@ function startCamera() {
       }
       cameraReady();
     },
-    (error) => {
+    error => {
       cameraReady(error);
-    });
+    }
+  );
 }
