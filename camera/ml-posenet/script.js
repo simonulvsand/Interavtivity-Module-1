@@ -4,6 +4,9 @@ const canvasEl = document.getElementById("canvas");
 const resultsEl = document.getElementById("results");
 const poseColours = [];
 
+
+
+
 // document.getElementById('btnFreeze').addEventListener('click', evt => {
 //   if (cameraEl.paused) {
 //     cameraEl.play();
@@ -37,6 +40,7 @@ cameraEl.addEventListener("play", () => {
 
   // Start processing!
   window.requestAnimationFrame(process);
+
 });
 
 // Processes the last frame from camera
@@ -54,6 +58,7 @@ function process() {
 function processPoses(poses) {
   // For debug purposes, draw points
   drawPoses(poses);
+  
 
   // const leftShoulder1 = getKeypointPos(poses, 'leftShoulder', 1);
   // const rightShoulder1 = getKeypointPos(poses, 'rightShoulder', 1);
@@ -75,33 +80,62 @@ function processPoses(poses) {
 
 
   let poseStrength = false;
+    // let poseStrength = false;
 
-  // let poseStrength = false;
-  var audio0 = document.getElementById("sound0");
-  var audio1 = document.getElementById("sound1");
-  var audio2 = document.getElementById("sound2");
+  const audio0 = document.getElementById("sound0");
+  const audio1 = document.getElementById("sound1");
+  const audio2 = document.getElementById("sound2");
 
-  // for(i=0; i< (poses.length); i++) {
-  //   if (poses[i].score > 0.3){
-  //     poseStrength = true;
-  //   }else{
-  //     poseStrength = false;
-  //   }
 
-  if (poses.length > 0 && poses[0].score > 0.3) {
-    const leftShoulder0 = getKeypointPos(poses, "leftShoulder", 0);
-    const rightShoulder0 = getKeypointPos(poses, "rightShoulder", 0);
 
-    const personDistance0 = Math.abs(leftShoulder0.x - rightShoulder0.x);
 
-    audio0.play();
 
-    for (i = 0; i < personDistance0; i++) {
-      audio0.volume = i / 700;
+  if(poses.length > 1 ) {
+
+
+    if(poses[0].score > 0.3 && poses[1].score > 0.3){
+      const leftShoulder0 = getKeypointPos(poses, "leftShoulder", 0);
+      const rightShoulder0 = getKeypointPos(poses, "rightShoulder", 0);
+  
+      const leftShoulder1 = getKeypointPos(poses, "leftShoulder", 1);
+      const rightShoulder1 = getKeypointPos(poses, "rightShoulder", 1);
+
+      let personDistance0 = Math.floor(Math.abs(leftShoulder0.x - rightShoulder0.x));
+      let personDistance1 = Math.floor(Math.abs(leftShoulder1.x - rightShoulder1.x));
+
+  
+      let centralPoint0 = Math.floor(Math.abs(leftShoulder0.x - rightShoulder0.x)) /2;
+      let centralPoint1 = Math.floor(Math.abs(leftShoulder1.x - rightShoulder1.x)) /2;
+  
+        
+        
+        
+        
+        
+        // if(diffY01 < 30 && diffX01 <5 && diffZ01 < 30 ) {
+        //   document.body.style.backgroundColor="red";
+        // }else {
+        //   document.body.style.backgroundColor="white";
+        // }
+  
+        // console.log(diffY0);
     }
-  } else {
-    audio0.volume = 0;
+
+
   };
+
+
+
+  for(i=0; i< (poses.length); i++) {
+    if (poses[i].score > 0.3){
+      poseStrength = true;
+
+    }else{
+      poseStrength = false;
+    }
+  };
+
+  
 
   if (poses.length > 1 && poses[1].score > 0.3) {
     const leftShoulder1 = getKeypointPos(poses, "leftShoulder", 1);
@@ -131,9 +165,6 @@ function processPoses(poses) {
   } else {
     audio2.volume = 0;
   }
-
-  //   // let centralPoint0 = Math.floor(Math.abs(leftShoulder0.x - rightShoulder0.x)) /2;
-  //   // let centralPoint1 = Math.floor(Math.abs(leftShoulder1.x - rightShoulder1.x)) /2;
 
   //   // if (leftEye != null && rightEye != null) {
   //   //   const slouchFactor = Math.floor(Math.abs(leftEye.y - rightEye.y));
