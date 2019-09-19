@@ -3,6 +3,12 @@ const cameraEl = document.getElementById("camera");
 const canvasEl = document.getElementById("canvas");
 const resultsEl = document.getElementById("results");
 const poseColours = [];
+const audioCtx = new AudioContext();
+var audio = [
+  document.getElementById("sound0"),
+  document.getElementById("sound1"),
+  document.getElementById("sound2")
+];
 
 // document.getElementById('btnFreeze').addEventListener('click', evt => {
 //   if (cameraEl.paused) {
@@ -55,6 +61,32 @@ function processPoses(poses) {
   // For debug purposes, draw points
   drawPoses(poses);
 
+  // if (poses.length > 0 && poses[0].score > 0.3) {
+  //   const leftShoulder0 = getKeypointPos(poses, "leftShoulder", 0);
+  //   const rightShoulder0 = getKeypointPos(poses, "rightShoulder", 0);
+
+  //   const personDistance0 = Math.abs(leftShoulder0.x - rightShoulder0.x);
+
+  //   audio0.play();
+  //   audio0.volume = 1;
+
+  //   console.log(personDistance0);
+  //   if(personDistance0 < 300) {
+  //     audio0.playbackRate =  personDistance0 / 300;
+  //   }
+
+  //   // for (i = 0; i < personDistance0; i++) {
+  //   //   audio0.volume = i / 700;
+  //   // }
+  // }
+  // else {
+  //   audio0.volume = 0;
+  // };
+
+  // let diffY01 = Math.floor(Math.abs(leftShoulder1.y - leftShoulder0.y));
+  // let diffX01 = Math.abs(centralPoint0-centralPoint1);
+  // let diffZ01 = Math.abs(personDistance0-personDistance1);
+
   // const leftShoulder1 = getKeypointPos(poses, 'leftShoulder', 1);
   // const rightShoulder1 = getKeypointPos(poses, 'rightShoulder', 1);
 
@@ -73,12 +105,7 @@ function processPoses(poses) {
   //   const personZ3= Math.floor(Math.abs(leftShoulder3.x-rightShoulder3.x) /2);
   //   const personZ4= Math.floor(Math.abs(leftShoulder4.x-rightShoulder4.x) /2);
 
-
-  let poseStrength = false;
- 
-  var audio = [document.getElementById("sound0"), document.getElementById("sound1"),document.getElementById("sound2")];
-  // var audio1 = document.getElementById("sound1");
-  // var audio2 = document.getElementById("sound2");
+  // let poseStrength = false;
 
   // for(i=0; i< (poses.length); i++) {
   //   if (poses[i].score > 0.3){
@@ -87,25 +114,29 @@ function processPoses(poses) {
   //     poseStrength = false;
   //   }
 
-  for(i=0; i< poses.length - 1; i++){
-    if(poses[i].score > 0.3){
+  if (poses.length < 4) {
+    for (i = 0; i < poses.length; i++) {
+      if (poses[i].score > 0.3) {
+        const leftShoulder = getKeypointPos(poses, "leftShoulder", i);
+        const rightShoulder = getKeypointPos(poses, "rightShoulder", i);
 
-      const leftShoulder = getKeypointPos(poses, "leftShoulder", i);
-      const rightShoulder = getKeypointPos(poses, "rightShoulder", i);
-  
-      const personDistance0 = Math.abs(leftShoulder.x - rightShoulder.x);
-  
-      audio[i].play();
-  
-      for (j = 0; j < personDistance0; j++) {
-        audio[i].volume = j / 700;
+        const personDistance0 = Math.abs(leftShoulder.x - rightShoulder.x);
+
+        audio[i].play();
+
+        for (j = 0; j < personDistance0; j++) {
+          audio[i].volume = j / 700;
+        }
+      } else {
+        audio[i].volume = 0;
       }
-    } else {
-      audio[i].volume = 0;
-    };
-  };
-
-
+      if (poses.length - 1 === i) {
+        for (j = poses.length; j < audio.length; j++) {
+          audio[j].volume = 0;
+        }
+      }
+    }
+  }
 
   //   // let centralPoint0 = Math.floor(Math.abs(leftShoulder0.x - rightShoulder0.x)) /2;
   //   // let centralPoint1 = Math.floor(Math.abs(leftShoulder1.x - rightShoulder1.x)) /2;
@@ -119,30 +150,87 @@ function processPoses(poses) {
   //   // }
   // }
 
+  if (poses.length > 1) {
+    
+    if (poses[0].score > 0.3 && poses[1].score > 0.3) {
+      const leftShoulder0 = getKeypointPos(poses, "leftShoulder", 0);
+      const rightShoulder0 = getKeypointPos(poses, "rightShoulder", 0);
 
-  if( poses.length > 0){
-    if(poses[0].score> 30 && poses[1].score> 30){
-  const leftShoulder0 = getKeypointPos(poses, 'leftShoulder', 0);
-  const rightShoulder0 = getKeypointPos(poses, 'rightShoulder', 0);
+      const leftShoulder1 = getKeypointPos(poses, "leftShoulder", 1);
+      const rightShoulder1 = getKeypointPos(poses, "rightShoulder", 1);
 
-  const leftShoulder1 = getKeypointPos(poses, 'leftShoulder', 1);
-  const rightShoulder1 = getKeypointPos(poses, 'rightShoulder', 1);
+      const centralX0 =
+        Math.floor(Math.abs(leftShoulder0.x - rightShoulder0.x)) / 2;
+      const centralY0 = Math.floor(Math.abs(leftShoulder0.y));
 
-  const centralX0= Math.floor(Math.abs(leftShoulder0.x-rightShoulder0.x))/2;
-  const centralY0= Math.floor(Math.abs(leftShoulder0.y-rightShoulder0.y))/2;
+      const centralX1 =
+        Math.floor(Math.abs(leftShoulder1.x - rightShoulder1.x)) / 2;
+      const centralY1 = Math.floor(Math.abs(leftShoulder1.y));
 
-  const centralX1= Math.floor(Math.abs(leftShoulder1.x-rightShoulder1.x))/2;
-  const centralY1= Math.floor(Math.abs(leftShoulder1.y-rightShoulder1.y))/2;
+      const distanceSqrX = Math.pow(Math.abs(centralX1 - centralX0), 2);
+      const distanceSqrY = Math.pow(Math.abs(centralY1 - centralY0), 2);
 
+      const distance01 = Math.sqrt(distanceSqrX + distanceSqrY);
 
-
-  const distance01= Math.sqrt(Math.pow((Math.abs(centralX1-centralX0)), 2)+Math.pow((Math.abs(centralY1 - centralY0))), 2);
-
-  console.log(distance01);
-
+      if (distance01 < 300) {
+        audio[0].playbackRate = distance01 / 300 +0.15;
+        audio[1].playbackRate = distance01 / 300 +0.15;
+      };
 
     }
-  }
+
+  };
+
+  if(poses.length >2){
+    if (poses[0].score > 0.3 && poses[1].score > 0.3 && poses[2].score > 0.3) {
+      const leftShoulder0 = getKeypointPos(poses, "leftShoulder", 0);
+      const rightShoulder0 = getKeypointPos(poses, "rightShoulder", 0);
+
+      const leftShoulder1 = getKeypointPos(poses, "leftShoulder", 1);
+      const rightShoulder1 = getKeypointPos(poses, "rightShoulder", 1);
+
+      const leftShoulder2 = getKeypointPos(poses, "leftShoulder", 2);
+      const rightShoulder2 = getKeypointPos(poses, "rightShoulder", 2);
+
+      const centralX0 = Math.floor(Math.abs(leftShoulder0.x - rightShoulder0.x)) / 2;
+      const centralY0 = Math.floor(Math.abs(leftShoulder0.y));
+
+      const centralX1 = Math.floor(Math.abs(leftShoulder1.x - rightShoulder1.x)) / 2;
+      const centralY1 = Math.floor(Math.abs(leftShoulder1.y));
+
+      const centralX2 = Math.floor(Math.abs(leftShoulder2.x - rightShoulder2.x)) / 2;
+      const centralY2 = Math.floor(Math.abs(leftShoulder2.y));
+
+      const distanceSqrX01 = Math.pow(Math.abs(centralX1 - centralX0), 2);
+      const distanceSqrY01 = Math.pow(Math.abs(centralY1 - centralY0), 2);
+      const distanceSqrX02 = Math.pow(Math.abs(centralX2 - centralX0), 2);
+      const distanceSqrY02 = Math.pow(Math.abs(centralY2 - centralY0), 2);
+      const distanceSqrX12 = Math.pow(Math.abs(centralX2 - centralX1), 2);
+      const distanceSqrY12 = Math.pow(Math.abs(centralY2 - centralY1), 2);
+
+      const distance01 = Math.sqrt(distanceSqrX01 + distanceSqrY01);
+      const distance02 = Math.sqrt(distanceSqrX02 + distanceSqrY02);
+      const distance12 = Math.sqrt(distanceSqrX12 + distanceSqrY12);
+
+
+      if (distance01 < 300) {
+        audio[0].playbackRate = distance01 / 300 +0.15;
+        audio[1].playbackRate = distance01 / 300 +0.15;
+      };
+
+      if (distance02 < 300) {
+        audio[0].playbackRate = distance01 / 300 +0.15;
+        audio[2].playbackRate = distance01 / 300 +0.15;
+      };
+
+      if (distance12 < 300) {
+        audio[1].playbackRate = distance01 / 300 +0.15;
+        audio[2].playbackRate = distance01 / 300 +0.15;
+      };
+
+    };
+  };
+
   // Repeat, if not paused
   if (cameraEl.paused) {
     console.log("Paused processing");
