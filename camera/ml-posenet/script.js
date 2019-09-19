@@ -10,6 +10,9 @@ var audio = [
   document.getElementById("sound2")
 ];
 
+
+
+
 // document.getElementById('btnFreeze').addEventListener('click', evt => {
 //   if (cameraEl.paused) {
 //     cameraEl.play();
@@ -43,6 +46,7 @@ cameraEl.addEventListener("play", () => {
 
   // Start processing!
   window.requestAnimationFrame(process);
+
 });
 
 // Processes the last frame from camera
@@ -61,59 +65,8 @@ function processPoses(poses) {
   // For debug purposes, draw points
   drawPoses(poses);
 
-  // if (poses.length > 0 && poses[0].score > 0.3) {
-  //   const leftShoulder0 = getKeypointPos(poses, "leftShoulder", 0);
-  //   const rightShoulder0 = getKeypointPos(poses, "rightShoulder", 0);
 
-  //   const personDistance0 = Math.abs(leftShoulder0.x - rightShoulder0.x);
-
-  //   audio0.play();
-  //   audio0.volume = 1;
-
-  //   console.log(personDistance0);
-  //   if(personDistance0 < 300) {
-  //     audio0.playbackRate =  personDistance0 / 300;
-  //   }
-
-  //   // for (i = 0; i < personDistance0; i++) {
-  //   //   audio0.volume = i / 700;
-  //   // }
-  // }
-  // else {
-  //   audio0.volume = 0;
-  // };
-
-  // let diffY01 = Math.floor(Math.abs(leftShoulder1.y - leftShoulder0.y));
-  // let diffX01 = Math.abs(centralPoint0-centralPoint1);
-  // let diffZ01 = Math.abs(personDistance0-personDistance1);
-
-  // const leftShoulder1 = getKeypointPos(poses, 'leftShoulder', 1);
-  // const rightShoulder1 = getKeypointPos(poses, 'rightShoulder', 1);
-
-  // const leftShoulder2 = getKeypointPos(poses, 'leftShoulder', 2);
-  // const rightShoulder2 = getKeypointPos(poses, 'rightShoulder', 2);
-
-  //   const leftShoulder4= getKeypointPos(poses, 'leftShoulder', 4);
-  //   const rightShoulder4 = getKeypointPos(poses, 'rightShoulder', 4);
-
-  // const personDistance1= Math.abs(leftShoulder1.x - rightShoulder1.x);
-  // const personDistance3= Math.abs(leftShoulder2.x - rightShoulder2.x);
-
-  //   const personZ0= Math.floor(Math.abs(leftShoulder0.x-rightShoulder0.x) /2);
-  //   const personZ1= Math.floor(Math.abs(leftShoulder1.x-rightShoulder1.x) /2);
-  //   const personZ2= Math.floor(Math.abs(leftShoulder2.x-rightShoulder2.x) /2);
-  //   const personZ3= Math.floor(Math.abs(leftShoulder3.x-rightShoulder3.x) /2);
-  //   const personZ4= Math.floor(Math.abs(leftShoulder4.x-rightShoulder4.x) /2);
-
-  // let poseStrength = false;
-
-  // for(i=0; i< (poses.length); i++) {
-  //   if (poses[i].score > 0.3){
-  //     poseStrength = true;
-  //   }else{
-  //     poseStrength = false;
-  //   }
-
+  //Control the distance from the camera
   if (poses.length < 4) {
     for (i = 0; i < poses.length; i++) {
       if (poses[i].score > 0.3) {
@@ -135,21 +88,11 @@ function processPoses(poses) {
           audio[j].volume = 0;
         }
       }
-    }
-  }
+    };
+  };
 
-  //   // let centralPoint0 = Math.floor(Math.abs(leftShoulder0.x - rightShoulder0.x)) /2;
-  //   // let centralPoint1 = Math.floor(Math.abs(leftShoulder1.x - rightShoulder1.x)) /2;
 
-  //   // if (leftEye != null && rightEye != null) {
-  //   //   const slouchFactor = Math.floor(Math.abs(leftEye.y - rightEye.y));
-
-  //   //   var c = canvasEl.getContext('2d');
-  //   //   c.fillStyle = 'black';
-  //   //   c.fillText('Slouch factor: ' + slouchFactor, 100, 10);
-  //   // }
-  // }
-
+  //Control the distance between perosn 1 and person 2
   if (poses.length > 1) {
     
     if (poses[0].score > 0.3 && poses[1].score > 0.3) {
@@ -181,6 +124,7 @@ function processPoses(poses) {
 
   };
 
+  //Control the distance between person 1, 2 and 2
   if(poses.length >2){
     if (poses[0].score > 0.3 && poses[1].score > 0.3 && poses[2].score > 0.3) {
       const leftShoulder0 = getKeypointPos(poses, "leftShoulder", 0);
@@ -231,6 +175,16 @@ function processPoses(poses) {
     };
   };
 
+
+  //   // if (leftEye != null && rightEye != null) {
+  //   //   const slouchFactor = Math.floor(Math.abs(leftEye.y - rightEye.y));
+
+  //   //   var c = canvasEl.getContext('2d');
+  //   //   c.fillStyle = 'black';
+  //   //   c.fillText('Slouch factor: ' + slouchFactor, 100, 10);
+  //   // }
+  // }
+  
   // Repeat, if not paused
   if (cameraEl.paused) {
     console.log("Paused processing");
